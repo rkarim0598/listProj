@@ -1,33 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Baseball Players</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">
-    <link rel="stylesheet" href="index.css">
-
-</head>
-<body>
-    <header>
-        <h1>Baseball Players</h1>
-    </header>
-
-    <main>
-        <form id="mainForm">
-            <p>
-                <label for="Player"></label>
-                <input type="text" name="playerName" autofocus>
-            </p>
-
-            <button type="submit">Add Player</button>
-        </form>
-
-        <div id="players"></div>
-    </main>
-
-    <embed src="http://www.notdoppler.com/superpressspacetowinactionrpg2009.php" style="width:600px; height: 600px;">
-    <script src="index.js"></script>
-</body>
-</html>
+const app = {
+    init: function(formSelector) {
+      document
+        .querySelector(formSelector)
+        .addEventListener('submit', this.handleSubmit)
+    },
+  
+    handleSubmit: function(ev) {
+      ev.preventDefault()
+      const f = ev.target
+      console.log(f.flickName.value)
+    },
+  }
+  
+  app.init('#flickForm')
+  
