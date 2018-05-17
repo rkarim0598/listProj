@@ -1,25 +1,48 @@
 const app = {
-    init: function(formSelector) {
-        this.max = 0
-        document
-        .querySelector(formSelector)
-        .addEventListener('submit', (ev) => {
-            ev.preventDefault()
-            this.handleSubmit(ev)
+    init(selectors) {
+      this.flicks = []
+      this.max = 0
+      this.list = document.querySelector(selectors.listSelector)
+      this.template = document.querySelector(selectors.templateSelector)
+  
+      document
+        .querySelector(selectors.formSelector)
+        .addEventListener('submit', ev => {
+          ev.preventDefault()
+          this.handleSubmit(ev)
         })
     },
   
-    handleSubmit: function(ev) {
-      
+    renderListItem(flick) {
+      const item = this.template.cloneNode(true)
+      item.classList.remove('template')
+      item.dataset.id = flick.id
+      item
+        .querySelector('.flickName')
+        .textContent = flick.name
+  
+      return item
+    },
+  
+    handleSubmit(ev) {
       const f = ev.target
       const flick = {
-          id: ++this.max,
-          name: f.flickName.value,
+        id: ++this.max,
+        name: f.flickName.value,
       }
-      console.log(flick)
+  
+      this.flicks.unshift(flick)
+  
+      const item = this.renderListItem(flick)
+      this.list.insertBefore(item, this.list.firstChild)
+  
       f.reset()
     },
   }
   
-  app.init('#flickForm')
+  app.init({
+    formSelector: '#flickForm',
+    listSelector: '#flickList',
+    templateSelector: '.flick.template',
+  })
   
