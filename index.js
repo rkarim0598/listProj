@@ -1,19 +1,20 @@
 const form = document.querySelector('#mainForm')
 const arrayyan = []
 var counter = 0
+const list = document.createElement('ul')
 
 function parser(ev) {
     var index = ev.target.id.replace('button-', '')
     return index
 }
 
-function deleteDis(list, pos) {
+function deleteDis(items, pos) {
     try {
-        list.removeChild(list.childNodes[pos])
-        arrayyan.splice(arrayyan.indexOf(list.childNodes[pos]))
+        items.removeChild(items.childNodes[pos])
+        arrayyan.splice(arrayyan.indexOf(items.childNodes[pos]))
         console.log(arrayyan)
     } catch (TypeError) {
-        deleteDis(list, pos-1)
+        deleteDis(items, pos-1)
     }
 }
 
@@ -34,8 +35,7 @@ function renderListItem(label, value) {
 }
 
 function renderList(data) {
-    const list = document.createElement('ul')
-    list.setAttribute("id", `list-${counter}`)
+    // list.setAttribute("id", `list-${counter}`)
     const labels = Object.keys(data)
     labels.forEach(function(label) {
         const item = renderListItem(label, data[label])
@@ -57,7 +57,7 @@ const handleSubmit = function(ev) {
     const bob = document.getElementById(`button-${counter-1}`)
     bob.addEventListener("click", function() {
         var index = parser(event)
-        deleteDis(players, index)
+        deleteDis(list, index)
     })
     f.reset()
     f.playerName.focus()
