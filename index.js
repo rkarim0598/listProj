@@ -24,7 +24,6 @@ function renderListItem(label, value) {
     const button = document.createElement('BUTTON')
     button.innerHTML = 'Delete'
     button.setAttribute("id", `button-${counter}`)
-    alert(button.id)
     item.appendChild(button)
     item.setAttribute("id", `thing-${counter}`)
     counter = counter + 1
