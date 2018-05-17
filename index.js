@@ -10,11 +10,13 @@ function parser(ev) {
 
 function deleteDis(items, pos) {
     try {
-        items.removeChild(items.childNodes[pos])
-        arrayyan.splice(arrayyan.indexOf(items.childNodes[pos]))
+        console.log(pos)
+        // items.removeChild(items.childNodes[pos])
+        // arrayyan.splice(arrayyan.indexOf(items.childNodes[pos]))
+        items.removeChild(document.getElementById(`thing-${pos}`))
         console.log(arrayyan)
     } catch (TypeError) {
-        deleteDis(items, pos-1)
+        // deleteDis(items, pos-1)
     }
 }
 
@@ -23,9 +25,9 @@ function renderListItem(label, value) {
     item.appendChild(document.createTextNode(`${label}: ${value}`))
     const button = document.createElement('BUTTON')
     button.innerHTML = 'Delete'
-    button.setAttribute("id", `button-${counter}`)
+    button.setAttribute("id", `button-${value}`)
     item.appendChild(button)
-    item.setAttribute("id", `thing-${counter}`)
+    item.setAttribute("id", `thing-${value}`)
     counter = counter + 1
 
     arrayyan.push(item)
@@ -53,7 +55,7 @@ const handleSubmit = function(ev) {
  
     const players = document.querySelector('#players')
     players.appendChild(renderList(player))
-    const bob = document.getElementById(`button-${counter-1}`)
+    const bob = document.getElementById(`button-${player.name}`)
     bob.addEventListener("click", function() {
         var index = parser(event)
         deleteDis(list, index)
