@@ -2,36 +2,40 @@ const form = document.querySelector('#mainForm')
 const arrayyan = []
 var counter = 0
 
-function deleteDis(ev) {
+function parser(ev) {
     var index = ev.target.id.replace('button-', '')
-    console.log(index)
-    list.removeChild(list.childNodes[parseInt(index)])
+    return index
+}
+
+function deleteDis(list, pos) {
+    try {
+        list.removeChild(list.childNodes[pos])
+        arrayyan.splice(arrayyan.indexOf(list.childNodes[pos]))
+        console.log(arrayyan)
+    } catch (TypeError) {
+        deleteDis(list, pos-1)
+    }
 }
 
 function renderListItem(label, value) {
     const item = document.createElement('li')
     item.appendChild(document.createTextNode(`${label}: ${value}`))
     const button = document.createElement('BUTTON')
-    button.innerHTML = `Delete ${counter}`
+    button.innerHTML = 'Delete'
     button.setAttribute("id", `button-${counter}`)
     alert(button.id)
     item.appendChild(button)
     item.setAttribute("id", `thing-${counter}`)
-    // button.addEventListener("submit", deleteDis)
     counter = counter + 1
-    // item.textContent = `${label}: ${value}`
+
     arrayyan.push(item)
-    // debugger
-    // const str = `button${counter}`
-    // alert(str)
-    // const bob = document.getElementById(`${button.id}`)
-    // bob.addEventListener("submit", deleteDis)
+
     return item
 }
 
 function renderList(data) {
     const list = document.createElement('ul')
-
+    list.setAttribute("id", `list-${counter}`)
     const labels = Object.keys(data)
     labels.forEach(function(label) {
         const item = renderListItem(label, data[label])
@@ -52,7 +56,8 @@ const handleSubmit = function(ev) {
     players.appendChild(renderList(player))
     const bob = document.getElementById(`button-${counter-1}`)
     bob.addEventListener("click", function() {
-        alert('hi')
+        var index = parser(event)
+        deleteDis(players, index)
     })
     f.reset()
     f.playerName.focus()
