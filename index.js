@@ -13,6 +13,25 @@ const app = {
         })
     },
   
+    deletePlz(ev) {
+        console.log(ev.target.dataset)
+        const actualDiv = document.querySelector('#flickList')
+        actualDiv.removeChild(actualDiv.querySelector("[data-id='" + ev.target.dataset["id"] + "']"))
+    },
+
+    favPlz(ev) {
+        console.log(ev.target)
+        console.log("fav plz")
+    },
+
+    setButtons(flick, item, theType, functionToExec) {
+        button = item.children[1].querySelector(`${theType}`)
+        console.log(button)
+        button.dataset.id = flick.id
+        button.addEventListener("click", functionToExec)
+        return button
+    },
+
     renderListItem(flick) {
       const item = this.template.cloneNode(true)
       item.classList.remove('template')
@@ -20,10 +39,9 @@ const app = {
       item
         .querySelector('.flickName')
         .textContent = flick.name
-  
       return item
     },
-  
+  // TODO : fix this.setButtons part
     handleSubmit(ev) {
       const f = ev.target
       const flick = {
@@ -35,7 +53,8 @@ const app = {
   
       const item = this.renderListItem(flick)
       this.list.insertBefore(item, this.list.firstChild)
-  
+      deleteButton = this.setButtons(flick, item, '.alert', this.deletePlz)
+      favButton = this.setButtons(flick, item, '.warning', this.favPlz)
       f.reset()
     },
   }
