@@ -14,14 +14,20 @@ const app = {
     },
   
     deletePlz(ev) {
-        console.log(ev.target.dataset)
         const actualDiv = document.querySelector('#flickList')
         actualDiv.removeChild(actualDiv.querySelector("[data-id='" + ev.target.dataset["id"] + "']"))
     },
 
     favPlz(ev) {
-        console.log(ev.target)
-        console.log("fav plz")
+        const actualDiv = document.querySelector('#flickList')
+        const thingy = actualDiv.querySelector("[data-id='" + ev.target.dataset["id"] + "']")
+
+        // set background color to blue if not already faved, reset to white if unfaved
+        if (thingy.style.backgroundColor === 'blue')
+          thingy.style.backgroundColor = 'whitesmoke'
+        else
+          thingy.style.backgroundColor = 'blue'
+        
     },
 
     setButtons(flick, item, theType, functionToExec) {
@@ -39,6 +45,7 @@ const app = {
       item
         .querySelector('.flickName')
         .textContent = flick.name
+      item.style.backgroundColor = 'whitesmoke'
       return item
     },
   // TODO : fix this.setButtons part
