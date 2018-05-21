@@ -78,4 +78,9 @@ img {
 
 .funcs {
   border: 5px;
+  transition: transform .2s;
+}
+
+.funcs:hover {
+  transform: scale(1.2);
 }
