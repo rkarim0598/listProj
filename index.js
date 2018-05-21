@@ -16,8 +16,14 @@ const app = {
     deletePlz(flicks, ev) {
         const actualDiv = document.querySelector('#flickList')
         const thingy = actualDiv.querySelector("[data-id='" + ev.target.dataset["id"] + "']")
-        debugger
-        flicks.indexOf(ev.target.dataset)
+        let location = 0
+        flicks.forEach(el => {
+          if (el.id == thingy.dataset.id) {
+              location = flicks.indexOf(el)
+          }
+        })
+        flicks.splice(location, 1)
+      
         actualDiv.removeChild(actualDiv.querySelector("[data-id='" + ev.target.dataset["id"] + "']"))
     },
 
@@ -35,9 +41,9 @@ const app = {
     moveUp(flicks, ev) {
       const actualDiv = document.querySelector('#flickList')
       const thingy = actualDiv.querySelector("[data-id='" + ev.target.dataset["id"] + "']")
-      debugger
+      // debugger
       var location = 0
-      
+      // debugger
       if (flicks.length == 1)
         return
       if (flicks[0].id == thingy.dataset["id"])
@@ -92,6 +98,8 @@ const app = {
     setButtons(flick, item, theType, functionToExec, flicks) {
       button = item.children[1].querySelector(`${theType}`)
       button.dataset.id = flick.id
+      button.querySelector('i').dataset.id = flick.id
+      // debugger
       button.addEventListener("click", function() {
         functionToExec(flicks, event)
       })
