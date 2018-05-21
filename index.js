@@ -13,29 +13,61 @@ const app = {
         })
     },
   
-    deletePlz(ev) {
+    deletePlz(flicks, ev) {
         const actualDiv = document.querySelector('#flickList')
         actualDiv.removeChild(actualDiv.querySelector("[data-id='" + ev.target.dataset["id"] + "']"))
     },
 
-    favPlz(ev) {
-        const actualDiv = document.querySelector('#flickList')
-        const thingy = actualDiv.querySelector("[data-id='" + ev.target.dataset["id"] + "']")
+    favPlz(flicks, ev) {
+      const actualDiv = document.querySelector('#flickList')
+      const thingy = actualDiv.querySelector("[data-id='" + ev.target.dataset["id"] + "']")
 
-        // set background color to blue if not already faved, reset to white if unfaved
-        if (thingy.style.backgroundColor === 'blue')
-          thingy.style.backgroundColor = 'whitesmoke'
-        else
-          thingy.style.backgroundColor = 'blue'
-        
+      // set background color to blue if not already faved, reset to white if unfaved
+      if (thingy.style.backgroundColor === 'blue')
+        thingy.style.backgroundColor = 'whitesmoke'
+      else
+        thingy.style.backgroundColor = 'blue'
     },
 
-    setButtons(flick, item, theType, functionToExec) {
-        button = item.children[1].querySelector(`${theType}`)
-        console.log(button)
-        button.dataset.id = flick.id
-        button.addEventListener("click", functionToExec)
-        return button
+    moveUp(flicks, ev) {
+      const actualDiv = document.querySelector('#flickList')
+      const thingy = actualDiv.querySelector("[data-id='" + ev.target.dataset["id"] + "']")
+      // debugger
+      var location = 0
+      
+      if (flicks[0].id == thingy.dataset["id"])
+        return
+      else {
+        for (var i = 0; i < flicks.length; i++) {
+          if (flicks[i].id == thingy.dataset["id"]) {
+            location = i - 1
+            break
+          }
+        }
+        // debugger
+        // actualDiv.insertBefore(actualDiv.querySelector())
+        actualDiv.insertBefore(thingy, actualDiv.querySelector("[data-id='" + flicks[location].id + "']"))
+
+        // swap in list
+        temp = flicks[location]
+        flicks[location] = flicks[location+1]
+        flicks[location+1] = temp
+      }
+    },
+
+    moveDown(flicks, ev) {
+      const actualDiv = document.querySelector('#flickList')
+      const thingy = actualDiv.querySelector("[data-id='" + ev.target.dataset["id"] + "']")
+      alert('hey')
+    },
+
+    setButtons(flick, item, theType, functionToExec, flicks) {
+      button = item.children[1].querySelector(`${theType}`)
+      button.dataset.id = flick.id
+      button.addEventListener("click", function() {
+        functionToExec(flicks, event)
+      })
+      return button
     },
 
     renderListItem(flick) {
@@ -48,7 +80,7 @@ const app = {
       item.style.backgroundColor = 'whitesmoke'
       return item
     },
-  // TODO : fix this.setButtons part
+
     handleSubmit(ev) {
       const f = ev.target
       const flick = {
@@ -62,6 +94,8 @@ const app = {
       this.list.insertBefore(item, this.list.firstChild)
       deleteButton = this.setButtons(flick, item, '.alert', this.deletePlz)
       favButton = this.setButtons(flick, item, '.warning', this.favPlz)
+      upButton = this.setButtons(flick, item, '.up', this.moveUp, this.flicks)
+      downButton = this.setButtons(flick, item, '.down', this.moveDown, this.flicks)
       f.reset()
     },
   }
