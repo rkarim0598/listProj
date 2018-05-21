@@ -15,6 +15,9 @@ const app = {
   
     deletePlz(flicks, ev) {
         const actualDiv = document.querySelector('#flickList')
+        const thingy = actualDiv.querySelector("[data-id='" + ev.target.dataset["id"] + "']")
+        debugger
+        flicks.indexOf(ev.target.dataset)
         actualDiv.removeChild(actualDiv.querySelector("[data-id='" + ev.target.dataset["id"] + "']"))
     },
 
@@ -32,9 +35,11 @@ const app = {
     moveUp(flicks, ev) {
       const actualDiv = document.querySelector('#flickList')
       const thingy = actualDiv.querySelector("[data-id='" + ev.target.dataset["id"] + "']")
-      // debugger
+      debugger
       var location = 0
       
+      if (flicks.length == 1)
+        return
       if (flicks[0].id == thingy.dataset["id"])
         return
       else {
@@ -58,7 +63,30 @@ const app = {
     moveDown(flicks, ev) {
       const actualDiv = document.querySelector('#flickList')
       const thingy = actualDiv.querySelector("[data-id='" + ev.target.dataset["id"] + "']")
-      alert('hey')
+      console.log(thingy)
+      var location = 0
+      // debugger
+      if (flicks.length == 1)
+        return
+      if (flicks[flicks.length-1].id == thingy.dataset["id"]) {
+        console.log("here")
+        return
+      }
+      else {
+        for (var i = 0; i < flicks.length; i++) {
+          if (flicks[i].id == thingy.dataset["id"]) {
+            location = i + 1
+            break
+          }
+        }
+
+        actualDiv.insertBefore(actualDiv.querySelector("[data-id='" + flicks[location].id + "']"), thingy)
+
+        //swap
+        temp = flicks[location]
+        flicks[location] = flicks[location-1]
+        flicks[location-1] = temp
+      }
     },
 
     setButtons(flick, item, theType, functionToExec, flicks) {
@@ -92,10 +120,14 @@ const app = {
   
       const item = this.renderListItem(flick)
       this.list.insertBefore(item, this.list.firstChild)
-      deleteButton = this.setButtons(flick, item, '.alert', this.deletePlz)
-      favButton = this.setButtons(flick, item, '.warning', this.favPlz)
+      deleteButton = this.setButtons(flick, item, '.alert', this.deletePlz, this.flicks)
+      favButton = this.setButtons(flick, item, '.warning', this.favPlz, this.flicks)
       upButton = this.setButtons(flick, item, '.up', this.moveUp, this.flicks)
       downButton = this.setButtons(flick, item, '.down', this.moveDown, this.flicks)
+      
+      // upButton.style.opacity = 0.6
+      // upButton.style.cursor = "not-allowed"
+      
       f.reset()
     },
   }

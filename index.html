@@ -6,6 +6,7 @@
   <title>Book Bucket List</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" media="screen" href="index.css" />
 </head>
 <body>
@@ -20,7 +21,7 @@
         <input
           type="text"
           class="input-group-field"
-          placeholder="Name a flick"
+          placeholder="Name a book"
           name="flickName"
           autofocus
           required
@@ -30,7 +31,7 @@
             class="button success"
             type="submit"
           >
-            Add flick
+            Add book title
           </button>
         </div>
       </div>
@@ -38,12 +39,20 @@
 
     <ul id="flickList" class="no-bullet">
       <li class="template flick grid-x align-middle">
-        <span class="flickName cell auto"></span>
+        <span class="flickName cell auto button-group" contenteditable="true"></span>
         <span class="actions cell shrink">
-          <button class="button secondary up">^</button>
-          <button class="button secondary down">v</button>
-          <button class="button warning">fav</button>
-          <button class="button alert">del</button>
+          <button class="button secondary up funcs">
+            <i class="fas fa-angle-double-up"></i>
+          </button>
+          <button class="button secondary down funcs">
+              <i class="fas fa-angle-double-down"></i>
+          </button>
+          <button class="button warning funcs">
+              <i class="fas fa-flag"></i>
+          </button>
+          <button class="button alert funcs">
+              <i class="fas fa-poo"></i>
+          </button>
         </span>
       </li>
     </ul>
